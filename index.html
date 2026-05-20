@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>- 樱花书屋</title>
+    <style>
+        :root {
+            --warm-brown: #7d6b63;
+            --cherry-pink: #ffc0cb;
+            --paper-white: #fdfaf6;
+            --text-color: #5a4d4a;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #fcf8f8;
+            font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+        }
+
+        /* 全屏背景容器 */
+        .garden-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background-image: url('tree.jpg'); /* 请确保图片文件名正确 */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 标题设计 */
+        .main-title {
+            position: absolute;
+            top: 40px;
+            font-size: 1.8rem;
+            color: var(--text-color);
+            letter-spacing: 8px;
+            opacity: 0.6;
+            font-weight: 300;
+            z-index: 10;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        /* 书本挂件整体 */
+        .hanger {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transform-origin: top center;
+            animation: swing 5s ease-in-out infinite;
+            z-index: 5;
+        }
+
+        /* 挂线 - 极细且半透明 */
+        .string {
+            width: 1px;
+            height: 60px; 
+            background: linear-gradient(to bottom, rgba(125, 107, 103, 0.2), rgba(125, 107, 103, 0.6));
+        }
+
+        /* 书本卡片 */
+        .book {
+            position: relative;
+            width: 100px;
+            height: 140px;
+            cursor: pointer;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-radius: 2px 5px 5px 2px;
+            overflow: hidden;
+        }
+
+        .book:hover {
+            transform: scale(1.15);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .book img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: filter 0.5s ease;
+        }
+
+        /* 语录遮罩 */
+        .quote-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(253, 250, 246, 0.95);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 12px;
+            box-sizing: border-box;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            border: 1px solid rgba(255, 192, 203, 0.5);
+        }
+
+        .book:hover .quote-overlay {
+            opacity: 1;
+        }
+
+        .book:hover img {
+            filter: blur(2px);
+        }
+
+        .quote-text {
+            font-size: 0.75rem;
+            line-height: 1.5;
+            color: var(--text-color);
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+
+        .book-title {
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: var(--warm-brown);
+            border-top: 1px solid var(--cherry-pink);
+            padding-top: 5px;
+        }
+
+        /* 摇摆动画 */
+        @keyframes swing {
+            0% { transform: rotate(-2deg); }
+            50% { transform: rotate(2deg); }
+            100% { transform: rotate(-2deg); }
+        }
+
+        /* 根据你提供的图片分布坐标 */
+        .b1 { top: 22%; left: 32%; animation-delay: 0s; }   /* 左上枝 */
+        .b2 { top: 25%; left: 65%; animation-delay: 0.7s; } /* 右上枝 */
+        .b3 { top: 42%; left: 20%; animation-delay: 1.4s; } /* 左中枝 */
+        .b4 { top: 48%; left: 78%; animation-delay: 2.1s; } /* 右中枝 */
+        .b5 { top: 58%; left: 52%; animation-delay: 2.8s; } /* 下方中央枝 */
+
+        /* 樱花瓣动画 */
+        .petal {
+            position: absolute;
+            background-color: #ffc0cb;
+            border-radius: 150% 0 150% 0;
+            opacity: 0.7;
+            pointer-events: none;
+            z-index: 1;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-title">精神栖息地</div>
+
+    <div class="garden-container" id="garden">
+        <!-- 书 1: 瓦尔登湖 -->
+        <div class="hanger b1">
+            <div class="string"></div>
+            <div class="book">
+                <img src="1.jpg" alt="瓦尔登湖">
+                <div class="quote-overlay">
+                    <p class="quote-text">“我步入丛林，是因为我希望生活得有意识地。”</p>
+                    <span class="book-title">《瓦尔登湖》</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 书 2: 反脆弱 -->
+        <div class="hanger b2">
+            <div class="string"></div>
+            <div class="book">
+                <img src="2.jpg" alt="反脆弱">
+                <div class="quote-overlay">
+                    <p class="quote-text">“风会吹灭蜡烛，但能使火势更旺。”</p>
+                    <span class="book-title">《反脆弱》</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 书 3: 窄门 -->
+        <div class="hanger b3">
+            <div class="string"></div>
+            <div class="book">
+                <img src="3.jpg" alt="窄门">
+                <div class="quote-overlay">
+                    <p class="quote-text">“一切都如此美丽，以至于令人心碎。”</p>
+                    <span class="book-title">《窄门》</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 书 4: 夏洛的网 -->
+        <div class="hanger b4">
+            <div class="string"></div>
+            <div class="book">
+                <img src="4.jpg" alt="夏洛的网">
+                <div class="quote-overlay">
+                    <p class="quote-text">“能遇到一个真正的朋友，是一件极其幸运的事。”</p>
+                    <span class="book-title">《夏洛的网》</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 书 5: 小王子 -->
+        <div class="hanger b5">
+            <div class="string"></div>
+            <div class="book">
+                <img src="5.jpg" alt="小王子">
+                <div class="quote-overlay">
+                    <p class="quote-text">“真正重要的东西，用眼睛是看不见的。”</p>
+                    <span class="book-title">《小王子》</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 动态生成飘落的樱花瓣
+        function createPetal() {
+            const garden = document.getElementById('garden');
+            const petal = document.createElement('div');
+            petal.classList.add('petal');
+            
+            // 随机大小
+            const size = Math.random() * 10 + 5 + 'px';
+            petal.style.width = size;
+            petal.style.height = size;
+            
+            // 随机起始位置
+            petal.style.left = Math.random() * 100 + 'vw';
+            
+            // 随机掉落速度
+            const duration = Math.random() * 5 + 5 + 's';
+            petal.style.animationDuration = duration;
+            
+            // 随机延迟
+            petal.style.animationDelay = Math.random() * 5 + 's';
+            
+            garden.appendChild(petal);
+            
+            // 动画结束后移除元素
+            setTimeout(() => {
+                petal.remove();
+            }, 10000);
+        }
+
+        // 每隔 300 毫秒产生一片花瓣
+        setInterval(createPetal, 300);
+    </script>
+</body>
+</html>
